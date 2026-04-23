@@ -139,30 +139,25 @@ Select Engagements`}].map(e=>(0,f.jsxs)(`div`,{children:[(0,f.jsx)(`p`,{classNam
     /* Hover boosts */
     .group:hover .font-serif.text-5xl.text-gold { opacity: 0.72 !important; }
     .group:hover .font-serif.text-3xl.text-gold  { opacity: 0.75 !important; }
-    /* AY Split Mark */
-    .ay-split { display: inline-flex; align-items: flex-start; line-height: 0.75; vertical-align: top; }
-    .ay-split-a { font-family: dulcinea, serif; line-height: 0.75; display: block; position: relative; z-index: 1; }
-    .ay-split-y { font-family: dulcinea, serif; line-height: 0.75; display: block; position: relative; z-index: 3; }
+    /* AY Split Mark — canonical spec from Brand Guidelines Hub */
+    .ay-split { display: inline-flex; align-items: flex-start; line-height: 0.85; vertical-align: top; }
+    .ay-split-a { font-family: dulcinea, serif; line-height: 0.85; display: block; position: relative; z-index: 1; }
+    .ay-split-y { font-family: dulcinea, serif; line-height: 0.85; display: block; position: relative; z-index: 3; }
 
     /* ── Mobile AY watermark — iPhone 15 (393px) centered, full mark visible ── */
     @media (max-width: 767px) {
-      /* Scale individual letter sizes to fit mobile viewport */
+      /* Scale letter sizes to fit mobile — canonical ratio Y = A × 1.171 */
       .ay-split-a {
-        font-size: 42vw !important;   /* ≈165px on iPhone 15 */
+        font-size: 42vw !important;
       }
       .ay-split-y {
-        font-size: 49vw !important;   /* ≈193px on iPhone 15  — 86% ratio preserved */
-        margin-left: -7vw !important; /* ≈-28px — 15% negative kern preserved */
+        font-size: 49vw !important;
+        margin-left: -0.22em !important; /* canonical overlap */
       }
-      /* Let the watermark container show the full Y curl */
-      .absolute.inset-0.pointer-events-none {
-        overflow: visible !important;
-      }
-      /* Parent <p> wrapper — remove old sizing, center naturally */
+      /* Keep absolute centering, just override font-size */
       .font-serif.text-\[28rem\] {
         font-size: inherit !important;
-        position: static !important;
-        left: auto !important;
+        left: 50% !important;
       }
     }
   </style>
