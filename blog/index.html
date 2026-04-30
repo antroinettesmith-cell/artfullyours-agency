@@ -623,8 +623,8 @@
     color: var(--gold); margin-bottom: 16px;
   }
   .footer-nav a, .footer-credentials a, .footer-credentials span {
-    display: block; font-family: 'Jost', sans-serif; font-size: 13px;
-    color: rgba(245,240,232,0.5); text-decoration: none;
+    display: block; font-family: 'Jost', sans-serif; font-size: 12px; letter-spacing: 0.04em;
+    color: rgba(245,240,232,0.75); text-decoration: none;
     margin-bottom: 10px; transition: color 0.3s;
   }
   .footer-nav a:hover, .footer-credentials a:hover {
@@ -686,15 +686,15 @@
         top: 0; left: 0; right: 0; bottom: 0;
         background: rgba(30,12,22,0.97);
         z-index: 999;
-        align-items: center;
+        align-items: flex-start;
         justify-content: center;
         gap: 28px;
         padding: 60px 24px;
         animation: fadeIn 0.3s ease;
       }
       .site-nav.open a {
-        font-size: 11px;
-        letter-spacing: 1.1px;
+        font-size: 10px;
+        letter-spacing: 1px;
         font-weight: 300;
         color: var(--cream);
         display: block;
@@ -718,6 +718,9 @@
     .hero-kicker { font-size: 11px; letter-spacing: 4px; }
     .hero-subtitle { font-size: 12px; letter-spacing: 6px; }
     .mood-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 160px; }
+    .lightbox-inner { flex-direction: column; max-height: 90vh; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+    .lightbox-label { flex: none; width: 100%; max-height: 50vh; overflow-y: auto; }
+    .lightbox-art { flex: none; width: 100%; max-height: 40vh; }
   }
 </style>
 </head>
@@ -1035,7 +1038,6 @@
         </div>
         <div class="footer-accepting">Now Accepting Select Engagements</div>
       </div>
-      <div>
         <div class="footer-nav">
           <h4>Navigation</h4>
           <a href="/">Home</a>
@@ -1049,13 +1051,13 @@
           <h4>Credentials</h4>
           <a href="https://www.credly.com/users/antroinette-smith" target="_blank">PMP® Certified ↗</a>
           <a href="https://www.credly.com/users/antroinette-smith" target="_blank">CMP Certified ↗</a>
+          <a href="https://www.credly.com/users/antroinette-smith" target="_blank">PMI Corporate Ambassador ↗</a>
           <span>Inclusive Event Project Strategist</span>
           <a href="https://www.bizbash.com/bizbash-lists/brands-event-pros/article/22936275/2025-bizbash-40-under-40-antroinette-smith" target="_blank">BizBash 40 Under 40 ↗</a>
           <h4 style="margin-top:20px;">Connect</h4>
           <a href="https://www.linkedin.com/in/antroinettesmith" target="_blank">LinkedIn →</a>
           <a href="mailto:info@artfullyoursevents.com">info@artfullyoursevents.com →</a>
         </div>
-      </div>
     </div>
     <div class="footer-bottom">
       <p>© 2026 The Artfullyours Agency, LLC. All rights reserved.</p>
@@ -1183,6 +1185,67 @@
       });
     })();
     </script>
+
+  <script>
+  // Video autoplay with unmute fallback
+  (function(){
+    var v = document.getElementById("teaser");
+    if(!v) return;
+    v.muted = false;
+    var p = v.play();
+    if(p !== undefined) {
+      p.catch(function(){
+        v.muted = true;
+        v.play();
+        var btn = document.createElement("button");
+        btn.textContent = "TAP TO UNMUTE";
+        btn.style.cssText = "position:absolute;top:12px;right:12px;background:var(--gold);color:var(--plum);border:none;padding:8px 16px;font-family:Jost,sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;z-index:10;border-radius:4px;";
+        btn.onclick = function(){ v.muted=false; btn.remove(); };
+        v.parentElement.style.position = "relative";
+        v.parentElement.appendChild(btn);
+      });
+    }
+  })();
+  </script>
+
+  <script>
+  // Pantone swatch popup handler
+  document.querySelectorAll(".color-swatch").forEach(function(swatch){
+    swatch.style.cursor = "pointer";
+    swatch.addEventListener("click", function(e){
+      var old = document.querySelector(".pantone-popup");
+      if(old) old.remove();
+      var color = swatch.getAttribute("data-color");
+      var code = swatch.getAttribute("data-code");
+      var name = swatch.getAttribute("data-name") || "";
+      var popup = document.createElement("div");
+      popup.className = "pantone-popup";
+      var html = '<div style="width:100%;height:80px;background:'+color+'"></div>';
+      html += '<div style="padding:12px 14px;">';
+      html += '<div style="font-family:Jost,sans-serif;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#333;margin-bottom:4px;">PANTONE</div>';
+      html += '<div style="font-family:Jost,sans-serif;font-size:13px;font-weight:500;color:#111;">'+code+'</div>';
+      if(name) html += '<div style="font-family:Jost,sans-serif;font-size:11px;color:#666;margin-top:2px;">'+name+'</div>';
+      html += '<div style="font-family:monospace;font-size:11px;color:#999;margin-top:4px;">'+color+'</div>';
+      html += '</div>';
+      popup.innerHTML = html;
+      popup.style.position = "fixed";
+      popup.style.zIndex = "9999";
+      var rect = swatch.getBoundingClientRect();
+      popup.style.left = (rect.left + rect.width/2 - 90) + "px";
+      var topPos = rect.top - 200;
+      popup.style.top = (topPos < 10 ? rect.bottom + 10 : topPos) + "px";
+      document.body.appendChild(popup);
+      setTimeout(function(){
+        document.addEventListener("click", function handler(ev){
+          if(!popup.contains(ev.target) && ev.target !== swatch){
+            popup.remove();
+            document.removeEventListener("click", handler);
+          }
+        });
+      }, 10);
+    });
+  });
+  </script>
 
   </body>
 </html>
