@@ -688,8 +688,8 @@
         z-index: 999;
         align-items: flex-start;
         justify-content: center;
-        gap: 28px;
-        padding: 60px 24px;
+        gap: 16px;
+        padding: 60px 24px 60px 40px;
         animation: fadeIn 0.3s ease;
       }
       .site-nav.open a {
@@ -703,6 +703,7 @@
       .site-nav.open .nav-cta-desktop {
         display: inline-block;
         margin-top: 12px;
+        align-self: flex-start;
       }
       .mobile-toggle.active { position: fixed; top: 20px; right: 24px; z-index: 1000; }
       .mobile-toggle.active span:nth-child(1) {
@@ -1185,28 +1186,6 @@
       });
     })();
     </script>
-
-  <script>
-  // Video autoplay with unmute fallback
-  (function(){
-    var v = document.getElementById("teaser");
-    if(!v) return;
-    v.muted = false;
-    var p = v.play();
-    if(p !== undefined) {
-      p.catch(function(){
-        v.muted = true;
-        v.play();
-        var btn = document.createElement("button");
-        btn.textContent = "TAP TO UNMUTE";
-        btn.style.cssText = "position:absolute;top:12px;right:12px;background:var(--gold);color:var(--plum);border:none;padding:8px 16px;font-family:Jost,sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;z-index:10;border-radius:4px;";
-        btn.onclick = function(){ v.muted=false; btn.remove(); };
-        v.parentElement.style.position = "relative";
-        v.parentElement.appendChild(btn);
-      });
-    }
-  })();
-  </script>
 
   <script>
   // Pantone swatch popup handler
