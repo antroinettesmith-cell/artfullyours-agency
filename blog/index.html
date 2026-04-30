@@ -643,8 +643,8 @@
   /* ===== RESPONSIVE ===== */
   @media (max-width: 900px) {
     nav { padding: 20px 24px; }
-    .nav-links { gap: 16px; }
-    .nav-links a { font-size: 9px; letter-spacing: 2px; }
+    .site-nav { gap: 16px; }
+    .site-nav a { font-size: 9px; letter-spacing: 2px; }
     .nav-cta { padding: 8px 16px; font-size: 8px; }
     .hero-cinematic { min-height: 480px; padding: 100px 24px 56px; }
     .hero-cinematic h1 { font-size: 36px; }
@@ -658,26 +658,47 @@
     .video-section { padding: 48px 24px; }
     .mood-section { padding: 48px 24px; }
     .cta-section { padding: 56px 24px; }
-  
-  /* Mobile unmute overlay */
-  .video-unmute-btn {
-    display: none;
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    z-index: 10; background: rgba(61,26,46,0.85); border: 1px solid var(--gold);
-    color: var(--cream); font-family: 'Cormorant Garamond', serif;
-    font-size: 14px; letter-spacing: 3px; text-transform: uppercase;
-    padding: 14px 28px; cursor: pointer; backdrop-filter: blur(4px);
-    transition: opacity 0.3s ease;
-  }
-  .video-unmute-btn:hover { background: rgba(61,26,46,0.95); }
-  @media (max-width: 900px) {
-    .video-unmute-btn { display: block; }
+    @media (max-width: 900px) {
   }
   .hero-scroll { bottom: 8px; }
     .hero-meta { margin-bottom: 36px; }
   }
   @media (max-width: 600px) {
-    .nav-links a:not(.active) { display: none; }
+    .site-nav a:not(.active) { display: none; }
+
+      .site-nav.open {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(30,12,22,0.97);
+        z-index: 999;
+        align-items: center;
+        justify-content: center;
+        gap: 28px;
+        padding: 60px 24px;
+        animation: fadeIn 0.3s ease;
+      }
+      .site-nav.open a {
+        font-size: 16px;
+        letter-spacing: 4px;
+        color: var(--cream);
+        display: block;
+      }
+      .site-nav.open a:hover { color: var(--gold); }
+      .site-nav.open .nav-cta-desktop {
+        display: inline-block;
+        margin-top: 12px;
+      }
+      .mobile-toggle.active { position: fixed; top: 20px; right: 24px; z-index: 1000; }
+      .mobile-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+      .mobile-toggle.active span:nth-child(2) { opacity: 0; }
+      .mobile-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+      }
+      @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     .hero-cinematic { min-height: 400px; }
     .hero-cinematic h1 { font-size: 28px; }
     .hero-kicker { font-size: 11px; letter-spacing: 4px; }
@@ -781,57 +802,27 @@
 <div class="video-section">
   <div class="video-container">
     <div class="video-frame">
-      <video id="teaser" controls autoplay muted playsinline preload="auto">
+      <video id="teaser" controls autoplay playsinline preload="auto">
         <source src="video/teaser.mp4" type="video/mp4">
       </video>
-      <button class="video-unmute-btn" id="unmute-btn" aria-label="Tap to unmute">Tap to Unmute</button>
       <script>
-        (function(){
-          var v = document.getElementById('teaser');
-          v.play().catch(function(){
-            v.muted = true;
-            v.play().then(function(){
-              document.addEventListener('click', function unmute(){
-                v.muted = false;
-                document.removeEventListener('click', unmute);
-              }, {once: true});
-            });
-          });
-        })();
-      </script>
+(function(){
+  var v = document.getElementById("teaser");
+  v.muted = false;
+  var p = v.play();
+  if (p !== undefined) {
+    p.catch(function(){
+      v.muted = true;
+      v.play();
+    });
+  }
+})();
+</script>
     </div>
     <div class="video-caption">Watch the Brand Launch Teaser
 
     </div>
-    <script>
-      (function(){
-        var vid = document.getElementById('teaser');
-        var btn = document.getElementById('unmute-btn');
-        if (!vid || !btn) return;
-        // Only show on mobile
-        function isMobile(){ return window.innerWidth <= 900; }
-        if (isMobile()) {
-          btn.style.display = 'block';
-          btn.addEventListener('click', function(){
-            vid.muted = false;
-            btn.style.opacity = '0';
-            setTimeout(function(){ btn.style.display = 'none'; }, 300);
-          });
-          // Also unmute on first tap of video
-          vid.addEventListener('click', function(){
-            vid.muted = false;
-            btn.style.display = 'none';
-          }, {once: true});
-        }
-        // Hide button if resized to desktop
-        window.addEventListener('resize', function(){
-          if (!isMobile()) { btn.style.display = 'none'; }
-        });
-      })();
-    </script>
-
-
-  </div>
+    </div>
 </div>
 
 <!-- SECTION III: THE REVEAL -->
@@ -1044,4 +1035,145 @@
         <div class="footer-accepting">Now Accepting Select Engagements</div>
       </div>
       <div>
-        <div class="f
+        <div class="footer-nav">
+          <h4>Navigate</h4>
+          <a href="/">About</a>
+          <a href="/#services">Services</a>
+          <a href="/#work">Work</a>
+          <a href="/#leadership">Leadership</a>
+          <a href="/blog">Blog</a>
+        </div>
+        <div class="footer-connect">
+          <h4>Start a Conversation</h4>
+          <a href="mailto:hello@artfullyoursevents.com" class="footer-cta">hello@artfullyoursevents.com</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 The Artfullyours Agency. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Lightbox Overlay -->
+    <div class="lightbox-overlay" id="lightbox-overlay">
+      <button class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</button>
+      <button class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Previous">&#8249;</button>
+      <button class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Next">&#8250;</button>
+      <div class="lightbox-inner">
+        <div class="lightbox-img-wrap" id="lightbox-media"></div>
+        <div class="lightbox-label" id="lightbox-label">
+          <div class="lb-title"></div>
+          <div class="lb-artist"></div>
+          <div class="lb-desc"></div>
+          <div class="lb-collection"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+    /* Mobile Nav Toggle */
+    (function(){
+      var toggle = document.querySelector(".mobile-toggle");
+      var nav = document.querySelector(".site-nav");
+      if (toggle && nav) {
+        toggle.addEventListener("click", function(){
+          nav.classList.toggle("open");
+          toggle.classList.toggle("active");
+          document.body.style.overflow = nav.classList.contains("open") ? "hidden" : "";
+        });
+        nav.querySelectorAll("a").forEach(function(a){
+          a.addEventListener("click", function(){
+            nav.classList.remove("open");
+            toggle.classList.remove("active");
+            document.body.style.overflow = "";
+          });
+        });
+        document.addEventListener("keydown", function(e){
+          if (e.key === "Escape" && nav.classList.contains("open")) {
+            nav.classList.remove("open");
+            toggle.classList.remove("active");
+            document.body.style.overflow = "";
+          }
+        });
+      }
+    })();
+    </script>
+
+    <script>
+    /* Lightbox */
+    (function(){
+      var items = document.querySelectorAll("[data-lightbox]");
+      var overlay = document.getElementById("lightbox-overlay");
+      var mediaWrap = document.getElementById("lightbox-media");
+      var labelWrap = document.getElementById("lightbox-label");
+      var closeBtn = document.getElementById("lightbox-close");
+      var prevBtn = document.getElementById("lightbox-prev");
+      var nextBtn = document.getElementById("lightbox-next");
+      var currentIdx = 0;
+      var itemsArr = Array.from(items);
+
+      function openLightbox(idx) {
+        currentIdx = idx;
+        var el = itemsArr[idx];
+        var src = el.getAttribute("data-lb-src") || el.getAttribute("src") || "";
+        var isVideo = el.getAttribute("data-lb-video") === "true";
+        mediaWrap.innerHTML = "";
+        if (isVideo) {
+          var vid = document.createElement("video");
+          vid.src = src; vid.controls = true; vid.autoplay = true;
+          vid.style.maxWidth = "90vw"; vid.style.maxHeight = "75vh";
+          mediaWrap.appendChild(vid);
+        } else {
+          var img = document.createElement("img");
+          img.src = src;
+          img.style.maxWidth = "90vw"; img.style.maxHeight = "75vh"; img.style.objectFit = "contain";
+          mediaWrap.appendChild(img);
+        }
+        var title = el.getAttribute("data-lb-title") || "";
+        var artist = el.getAttribute("data-lb-artist") || "";
+        var desc = el.getAttribute("data-lb-desc") || "";
+        var coll = el.getAttribute("data-lb-collection") || "";
+        labelWrap.querySelector(".lb-title").textContent = title;
+        labelWrap.querySelector(".lb-artist").textContent = artist;
+        labelWrap.querySelector(".lb-desc").textContent = desc;
+        labelWrap.querySelector(".lb-collection").textContent = coll;
+        labelWrap.style.display = (title || artist || desc || coll) ? "block" : "none";
+        overlay.classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeLightbox() {
+        overlay.classList.remove("active");
+        document.body.style.overflow = "";
+        mediaWrap.innerHTML = "";
+      }
+
+      function navigate(dir) {
+        var next = (currentIdx + dir + itemsArr.length) % itemsArr.length;
+        openLightbox(next);
+      }
+
+      itemsArr.forEach(function(el, i) {
+        el.style.cursor = "pointer";
+        el.addEventListener("click", function(e) {
+          e.preventDefault();
+          openLightbox(i);
+        });
+      });
+
+      closeBtn.addEventListener("click", closeLightbox);
+      prevBtn.addEventListener("click", function(){ navigate(-1); });
+      nextBtn.addEventListener("click", function(){ navigate(1); });
+      overlay.addEventListener("click", function(e) {
+        if (e.target === overlay) closeLightbox();
+      });
+      document.addEventListener("keydown", function(e) {
+        if (!overlay.classList.contains("active")) return;
+        if (e.key === "Escape") closeLightbox();
+        if (e.key === "ArrowLeft") navigate(-1);
+        if (e.key === "ArrowRight") navigate(1);
+      });
+    })();
+    </script>
+
+  </body>
+</html>
