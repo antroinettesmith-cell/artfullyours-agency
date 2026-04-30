@@ -1226,7 +1226,7 @@
   });
   </script>
 <script>
-(function(){var v=document.getElementById("teaser");if(!v)return;function u(){v.muted=false;document.removeEventListener("touchstart",u);document.removeEventListener("scroll",u);document.removeEventListener("click",u);}if(v.muted){document.addEventListener("touchstart",u,{once:true});document.addEventListener("scroll",u,{once:true});document.addEventListener("click",u,{once:true});}})();
+(function(){var v=document.getElementById("teaser");if(!v)return;v.muted=true;var p=v.play();if(p!==undefined){p.catch(function(){var h=function(){v.play();document.removeEventListener("click",h);document.removeEventListener("touchstart",h);document.removeEventListener("scroll",h);};document.addEventListener("click",h,{once:true});document.addEventListener("touchstart",h,{once:true});document.addEventListener("scroll",h,{once:true});});}function u(){v.muted=false;document.removeEventListener("touchstart",u);document.removeEventListener("scroll",u);document.removeEventListener("click",u);}document.addEventListener("touchstart",u,{once:true});document.addEventListener("scroll",u,{once:true});document.addEventListener("click",u,{once:true});})();
 </script>
 
   </body>
