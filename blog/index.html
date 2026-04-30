@@ -687,9 +687,9 @@
         background: rgba(30,12,22,0.97);
         z-index: 999;
         align-items: flex-start;
-        justify-content: center;
+        justify-content: flex-start;
         gap: 16px;
-        padding: 60px 24px 60px 40px;
+        padding: 100px 24px 40px 40px;
         animation: fadeIn 0.3s ease;
       }
       .site-nav.open a {
@@ -820,7 +820,7 @@
 <div class="video-section">
   <div class="video-container">
     <div class="video-frame">
-      <video id="teaser" autoplay playsinline loop controls preload="auto">
+      <video id="teaser" muted autoplay playsinline loop controls preload="auto">
         <source src="video/teaser.mp4" type="video/mp4">
       </video>
  </div>
@@ -1210,7 +1210,7 @@
       popup.style.position = "fixed";
       popup.style.zIndex = "9999";
       var rect = swatch.getBoundingClientRect();
-      popup.style.left = (rect.left + rect.width/2 - 90) + "px";
+      var lp=rect.left+rect.width/2-90;if(lp<10)lp=10;if(lp+180>window.innerWidth)lp=window.innerWidth-190;popup.style.left=lp+"px";
       var topPos = rect.top - 200;
       popup.style.top = (topPos < 10 ? rect.bottom + 10 : topPos) + "px";
       document.body.appendChild(popup);
@@ -1225,6 +1225,9 @@
     });
   });
   </script>
+<script>
+(function(){var v=document.getElementById("teaser");if(!v)return;function u(){v.muted=false;document.removeEventListener("touchstart",u);document.removeEventListener("scroll",u);document.removeEventListener("click",u);}if(v.muted){document.addEventListener("touchstart",u,{once:true});document.addEventListener("scroll",u,{once:true});document.addEventListener("click",u,{once:true});}})();
+</script>
 
   </body>
 </html>
