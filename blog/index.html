@@ -816,31 +816,10 @@
 <div class="video-section">
   <div class="video-container">
     <div class="video-frame">
-      <video id="teaser" controls autoplay playsinline preload="auto">
+      <video id="teaser" autoplay playsinline loop controls preload="auto">
         <source src="video/teaser.mp4" type="video/mp4">
       </video>
-      <script>
-(function(){
-  var v = document.getElementById("teaser");
-  v.muted = false;
-  var p = v.play();
-  if (p !== undefined) {
-    p.catch(function(){
-      v.muted = true;
-      v.play();
-      var btn = document.createElement("button");
-      btn.textContent = "TAP TO UNMUTE";
-      btn.style.cssText = "position:absolute;bottom:20px;right:20px;z-index:10;background:rgba(61,26,46,0.85);color:#F5F0E8;border:1px solid rgba(212,168,67,0.4);padding:8px 18px;font-family:Jost,sans-serif;font-size:10px;letter-spacing:2px;cursor:pointer;text-transform:uppercase;backdrop-filter:blur(4px);transition:all 0.3s;";
-      btn.onmouseenter = function(){btn.style.background="rgba(212,168,67,0.9)";btn.style.color="#1A1A1A";};
-      btn.onmouseleave = function(){btn.style.background="rgba(61,26,46,0.85)";btn.style.color="#F5F0E8";};
-      btn.onclick = function(){v.muted=false;btn.remove();};
-      v.parentElement.style.position = "relative";
-      v.parentElement.appendChild(btn);
-    });
-  }
-})();
-</script>
-    </div>
+ </div>
     <div class="video-caption">Watch the Brand Launch Teaser
 
     </div>
