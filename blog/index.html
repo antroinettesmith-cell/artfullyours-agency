@@ -211,6 +211,19 @@
     max-width: 740px; margin: 0 auto;
     padding: 72px 60px;
   }
+  .editorial-float {
+    float: right; width: 260px; margin: 0 0 20px 32px;
+    position: relative;
+  }
+  .editorial-float img {
+    width: 100%; display: block; border-radius: 4px;
+    box-shadow: 8px 8px 0 var(--gold);
+  }
+  .editorial-float-caption {
+    font-family: 'Jost', sans-serif; font-size: 8px;
+    letter-spacing: 2px; text-transform: uppercase; color: var(--warm-gray);
+    margin-top: 10px; text-align: right;
+  }
   .article-section.on-dark {
     max-width: 100%; background: var(--plum-deep);
     color: var(--cream);
@@ -408,59 +421,57 @@
     letter-spacing: 4px; text-transform: uppercase; color: var(--gold);
     margin-bottom: 14px;
   }
-  .palette-row { display: flex; gap: 10px; margin-bottom: 0; flex-wrap: wrap; justify-content: center; }
-  .pantone-chip {
-    width: 52px; cursor: pointer; position: relative; z-index: 1;
-    transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), z-index 0s 0.4s, box-shadow 0.4s ease;
+  .palette-row { display: flex; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+  .color-swatch {
+    width: 36px; height: 36px; border-radius: 4px; cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
   }
-  .pantone-chip.active {
-    transform: scale(3.2); z-index: 50;
-    transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), z-index 0s 0s, box-shadow 0.4s ease;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+  .color-swatch:hover { transform: scale(1.12); box-shadow: 0 3px 12px rgba(0,0,0,0.2); }
+  .color-swatch[data-color="#F5F0E8"] { border: 1px solid #ddd; }
+  .palette-labels {
+    font-family: 'Jost', sans-serif; font-size: 8px; color: var(--warm-gray);
+    letter-spacing: 0.5px; display: flex; gap: 4px; flex-wrap: wrap;
   }
-  .pantone-chip-color {
-    width: 100%; aspect-ratio: 1 / 1.1; border-radius: 2px 2px 0 0;
-  }
-  .pantone-chip-info {
-    background: #fff; padding: 4px 4px 5px; border-radius: 0 0 2px 2px;
-    border: 1px solid #e0ddd8; border-top: none;
-  }
-  .pantone-chip .pantone-logo {
-    font-family: 'Jost', sans-serif; font-weight: 600; font-size: 3.5px;
-    letter-spacing: 0.3px; color: #1a1a1a; line-height: 1;
-  }
-  .pantone-chip .pantone-code {
-    font-family: 'Jost', sans-serif; font-weight: 400; font-size: 2.8px;
-    color: #555; line-height: 1.4;
-  }
-  .pantone-chip .pantone-name {
-    font-family: 'Jost', sans-serif; font-weight: 500; font-size: 2.8px;
-    color: #1a1a1a; letter-spacing: 0.2px; line-height: 1.3;
-  }
-  .pantone-chip .pantone-specs {
-    display: none;
-  }
-  .pantone-chip.active .pantone-specs {
-    display: block; margin-top: 2px; padding-top: 2px;
-    border-top: 1px solid #eee;
-  }
-  .pantone-chip .pantone-spec-line {
-    font-family: 'Jost', sans-serif; font-weight: 400; font-size: 2.2px;
-    color: #777; line-height: 1.6; letter-spacing: 0.1px;
-  }
-  .pantone-chip .pantone-spec-label {
-    display: inline-block; width: 10px; font-weight: 500; color: #555;
-  }
+  .palette-labels span { width: 36px; text-align: center; }
+  /* Pantone popup card */
   .pantone-overlay {
     display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.4); z-index: 40;
+    background: rgba(0,0,0,0.5); z-index: 1000;
     animation: pantone-fade-in 0.3s ease;
+    justify-content: center; align-items: center;
   }
-  .pantone-overlay.active { display: block; }
+  .pantone-overlay.active { display: flex; }
   @keyframes pantone-fade-in { from { opacity: 0; } to { opacity: 1; } }
-  .palette-labels {
-    font-family: 'Jost', sans-serif; font-size: 9px; color: var(--warm-gray);
-    letter-spacing: 0.5px; display: none;
+  .pantone-popup {
+    width: 180px; background: #fff; border-radius: 6px; overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    animation: pantone-pop 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  @keyframes pantone-pop { from { transform: scale(0.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .pantone-popup-color { width: 100%; aspect-ratio: 1 / 1; }
+  .pantone-popup-info { padding: 14px 16px 18px; }
+  .pantone-popup .pantone-logo {
+    font-family: 'Jost', sans-serif; font-weight: 600; font-size: 11px;
+    letter-spacing: 0.5px; color: #1a1a1a; line-height: 1; margin-bottom: 4px;
+  }
+  .pantone-popup .pantone-code {
+    font-family: 'Jost', sans-serif; font-weight: 400; font-size: 10px;
+    color: #555; line-height: 1.5;
+  }
+  .pantone-popup .pantone-name {
+    font-family: 'Jost', sans-serif; font-weight: 500; font-size: 10px;
+    color: #1a1a1a; letter-spacing: 0.3px; line-height: 1.4; margin-bottom: 8px;
+  }
+  .pantone-popup .pantone-specs {
+    padding-top: 8px; border-top: 1px solid #eee;
+  }
+  .pantone-popup .pantone-spec-line {
+    font-family: 'Jost', sans-serif; font-weight: 400; font-size: 9px;
+    color: #777; line-height: 1.8; letter-spacing: 0.2px;
+  }
+  .pantone-popup .pantone-spec-label {
+    display: inline-block; width: 36px; font-weight: 500; color: #555;
   }
   .tag-list { display: flex; flex-wrap: wrap; gap: 6px; }
   .tag {
@@ -622,6 +633,8 @@
     .hero-cinematic { min-height: 480px; padding: 100px 24px 56px; }
     .hero-cinematic h1 { font-size: 36px; }
     .article-section { padding: 48px 24px; }
+    .editorial-float { float: none; width: 100%; margin: 0 0 24px 0; }
+    .editorial-float img { box-shadow: 6px 6px 0 var(--gold); }
     .image-break { grid-template-columns: 1fr; max-height: none; }
     .image-break img { height: 240px; }
     .mood-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 200px; }
@@ -687,6 +700,10 @@
 <div class="article-section">
   <div class="section-kicker">I. The Hook</div>
   <div class="section-title">The Sequel That Wrote Itself</div>
+  <div class="editorial-float">
+    <img src="images/vogue-editorial-collage.jpg" alt="Vogue covers, Prada storefront, red stiletto — the world Miranda built">
+    <div class="editorial-float-caption">The world she built</div>
+  </div>
   <div class="body-text">
     When the first Devil Wears Prada dropped in 2006, it didn't just entertain — it codified something. Excellence isn't aspirational. It's operational. Miranda Priestly didn't hope for precision. She required it.
   </div>
@@ -771,7 +788,7 @@
 
 <!-- FULL-WIDTH IMAGE WITH OVERLAY -->
 <div class="image-break-full">
-  <img src="images/defined-by-elegance.webp" alt="Lace glove holding calling card — Defined by Elegance">
+  <img src="images/red-shoe-briefcase.png" alt="Red stiletto heel on leather briefcase with vintage phone — The details make the design">
   <div class="overlay-text">
     <div class="big">The details aren't just details.<br>They make the design.</div>
     <div class="small">The Artfullyours Agency</div>
@@ -821,74 +838,31 @@
 <div class="sidebar-strip">
   <div class="sidebar-block">
     <div class="sidebar-title">Visual Direction</div>
-    <div class="palette-row" id="paletteRow">
-      <div class="pantone-chip" onclick="togglePantone(this)">
-        <div class="pantone-chip-color" style="background:#3D1A2E;"></div>
-        <div class="pantone-chip-info">
-          <div class="pantone-logo">PANTONE<sup style="font-size:1.5px;">®</sup></div>
-          <div class="pantone-code">2365 C</div>
-          <div class="pantone-name">Plum</div>
+    <div class="palette-row">
+      <div class="color-swatch" style="background:#3D1A2E;" data-color="#3D1A2E" data-code="2365 C" data-name="Plum" data-rgb="61 · 26 · 46" data-cmyk="54 · 87 · 41 · 44" onclick="showPantone(this)"></div>
+      <div class="color-swatch" style="background:#5C1A2A;" data-color="#5C1A2A" data-code="1955 C" data-name="Burgundy" data-rgb="92 · 26 · 42" data-cmyk="30 · 93 · 60 · 40" onclick="showPantone(this)"></div>
+      <div class="color-swatch" style="background:#D4A843;" data-color="#D4A843" data-code="4015 C" data-name="Antique Gold" data-rgb="212 · 168 · 67" data-cmyk="14 · 30 · 82 · 1" onclick="showPantone(this)"></div>
+      <div class="color-swatch" style="background:#F5F0E8;" data-color="#F5F0E8" data-code="7527 C" data-name="Cream" data-rgb="245 · 240 · 232" data-cmyk="3 · 3 · 7 · 0" onclick="showPantone(this)"></div>
+      <div class="color-swatch" style="background:#1A1A1A;" data-color="#1A1A1A" data-code="Black 6 C" data-name="Noir" data-rgb="26 · 26 · 26" data-cmyk="72 · 66 · 64 · 75" onclick="showPantone(this)"></div>
+    </div>
+    <div class="palette-labels">
+      <span>Plum</span><span>Burgundy</span><span>Gold</span><span>Cream</span><span>Noir</span>
+    </div>
+    <div class="pantone-overlay" id="pantoneOverlay" onclick="closePantone()">
+      <div class="pantone-popup" id="pantonePopup" onclick="event.stopPropagation()">
+        <div class="pantone-popup-color" id="pantonePopupColor"></div>
+        <div class="pantone-popup-info">
+          <div class="pantone-logo">PANTONE<sup style="font-size:6px;">®</sup></div>
+          <div class="pantone-code" id="pantonePopupCode"></div>
+          <div class="pantone-name" id="pantonePopupName"></div>
           <div class="pantone-specs">
-            <div class="pantone-spec-line"><span class="pantone-spec-label">HEX</span>#3D1A2E</div>
-            <div class="pantone-spec-line"><span class="pantone-spec-label">RGB</span>61 · 26 · 46</div>
-            <div class="pantone-spec-line"><span class="pantone-spec-label">CMYK</span>54 · 87 · 41 · 44</div>
-          </div>
-        </div>
-      </div>
-      <div class="pantone-chip" onclick="togglePantone(this)">
-        <div class="pantone-chip-color" style="background:#5C1A2A;"></div>
-        <div class="pantone-chip-info">
-          <div class="pantone-logo">PANTONE<sup style="font-size:1.5px;">®</sup></div>
-          <div class="pantone-code">1955 C</div>
-          <div class="pantone-name">Burgundy</div>
-          <div class="pantone-specs">
-            <div class="pantone-spec-line"><span class="pantone-spec-label">HEX</span>#5C1A2A</div>
-            <div class="pantone-spec-line"><span class="pantone-spec-label">RGB</span>92 · 26 · 42</div>
-            <div class="pantone-spec-line"><span class="pantone-spec-label">CMYK</span>30 · 93 · 60 · 40</div>
-          </div>
-        </div>
-      </div>
-      <div class="pantone-chip" onclick="togglePantone(this)">
-        <div class="pantone-chip-color" style="background:#D4A843;"></div>
-        <div class="pantone-chip-info">
-          <div class="pantone-logo">PANTONE<sup style="font-size:1.5px;">®</sup></div>
-          <div class="pantone-code">4015 C</div>
-          <div class="pantone-name">Antique Gold</div>
-          <div class="pantone-specs">
-            <div class="pantone-spec-line"><span class="pantone-spec-label">HEX</span>#D4A843</div>
-            <div class="pantone-spec-line"><span class="pantone-spec-label">RGB</span>212 · 168 · 67</div>
-            <div class="pantone-spec-line"><span class="pantone-spec-label">CMYK</span>14 · 30 · 82 · 1</div>
-          </div>
-        </div>
-      </div>
-      <div class="pantone-chip" onclick="togglePantone(this)">
-        <div class="pantone-chip-color" style="background:#F5F0E8;"></div>
-        <div class="pantone-chip-info">
-          <div class="pantone-logo">PANTONE<sup style="font-size:1.5px;">®</sup></div>
-          <div class="pantone-code">7527 C</div>
-          <div class="pantone-name">Cream</div>
-          <div class="pantone-specs">
-            <div class="pantone-spec-line"><span class="pantone-spec-label">HEX</span>#F5F0E8</div>
-            <div class="pantone-spec-line"><span class="pantone-spec-label">RGB</span>245 · 240 · 232</div>
-            <div class="pantone-spec-line"><span class="pantone-spec-label">CMYK</span>3 · 3 · 7 · 0</div>
-          </div>
-        </div>
-      </div>
-      <div class="pantone-chip" onclick="togglePantone(this)">
-        <div class="pantone-chip-color" style="background:#1A1A1A;"></div>
-        <div class="pantone-chip-info">
-          <div class="pantone-logo">PANTONE<sup style="font-size:1.5px;">®</sup></div>
-          <div class="pantone-code">Black 6 C</div>
-          <div class="pantone-name">Noir</div>
-          <div class="pantone-specs">
-            <div class="pantone-spec-line"><span class="pantone-spec-label">HEX</span>#1A1A1A</div>
-            <div class="pantone-spec-line"><span class="pantone-spec-label">RGB</span>26 · 26 · 26</div>
-            <div class="pantone-spec-line"><span class="pantone-spec-label">CMYK</span>72 · 66 · 64 · 75</div>
+            <div class="pantone-spec-line"><span class="pantone-spec-label">HEX</span><span id="pantonePopupHex"></span></div>
+            <div class="pantone-spec-line"><span class="pantone-spec-label">RGB</span><span id="pantonePopupRgb"></span></div>
+            <div class="pantone-spec-line"><span class="pantone-spec-label">CMYK</span><span id="pantonePopupCmyk"></span></div>
           </div>
         </div>
       </div>
     </div>
-    <div class="pantone-overlay" id="pantoneOverlay" onclick="closePantone()"></div>
   </div>
   <div class="sidebar-block">
     <div class="sidebar-title">Topics</div>
@@ -1133,19 +1107,20 @@
 </script>
 
 <script>
-function togglePantone(chip) {
-  const wasActive = chip.classList.contains('active');
-  closePantone();
-  if (!wasActive) {
-    chip.classList.add('active');
-    document.getElementById('pantoneOverlay').classList.add('active');
-  }
+function showPantone(swatch) {
+  var d = swatch.dataset;
+  document.getElementById('pantonePopupColor').style.background = d.color;
+  document.getElementById('pantonePopupCode').textContent = d.code;
+  document.getElementById('pantonePopupName').textContent = d.name;
+  document.getElementById('pantonePopupHex').textContent = d.color;
+  document.getElementById('pantonePopupRgb').textContent = d.rgb;
+  document.getElementById('pantonePopupCmyk').textContent = d.cmyk;
+  document.getElementById('pantoneOverlay').classList.add('active');
 }
 function closePantone() {
-  document.querySelectorAll('.pantone-chip.active').forEach(c => c.classList.remove('active'));
   document.getElementById('pantoneOverlay').classList.remove('active');
 }
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closePantone(); });
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closePantone(); });
 </script>
 
 </body>
