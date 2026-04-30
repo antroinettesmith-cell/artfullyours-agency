@@ -617,6 +617,19 @@
     transition: color 0.3s;
   }
   .footer-connect-links a:hover { color: var(--gold-pale); }
+    .footer-nav h4, .footer-credentials h4 {
+    font-family: 'Jost', sans-serif; font-size: 10px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 16px;
+  }
+  .footer-nav a, .footer-credentials a, .footer-credentials span {
+    display: block; font-family: 'Jost', sans-serif; font-size: 13px;
+    color: rgba(245,240,232,0.5); text-decoration: none;
+    margin-bottom: 10px; transition: color 0.3s;
+  }
+  .footer-nav a:hover, .footer-credentials a:hover {
+    color: var(--gold);
+  }
   .footer-bottom {
     margin-top: 56px; padding-top: 24px;
     border-top: 1px solid rgba(245,240,232,0.1);
@@ -680,8 +693,9 @@
         animation: fadeIn 0.3s ease;
       }
       .site-nav.open a {
-        font-size: 16px;
-        letter-spacing: 4px;
+        font-size: 11px;
+        letter-spacing: 1.1px;
+        font-weight: 300;
         color: var(--cream);
         display: block;
       }
@@ -814,6 +828,14 @@
     p.catch(function(){
       v.muted = true;
       v.play();
+      var btn = document.createElement("button");
+      btn.textContent = "TAP TO UNMUTE";
+      btn.style.cssText = "position:absolute;bottom:20px;right:20px;z-index:10;background:rgba(61,26,46,0.85);color:#F5F0E8;border:1px solid rgba(212,168,67,0.4);padding:8px 18px;font-family:Jost,sans-serif;font-size:10px;letter-spacing:2px;cursor:pointer;text-transform:uppercase;backdrop-filter:blur(4px);transition:all 0.3s;";
+      btn.onmouseenter = function(){btn.style.background="rgba(212,168,67,0.9)";btn.style.color="#1A1A1A";};
+      btn.onmouseleave = function(){btn.style.background="rgba(61,26,46,0.85)";btn.style.color="#F5F0E8";};
+      btn.onclick = function(){v.muted=false;btn.remove();};
+      v.parentElement.style.position = "relative";
+      v.parentElement.appendChild(btn);
     });
   }
 })();
@@ -1036,22 +1058,30 @@
       </div>
       <div>
         <div class="footer-nav">
-          <h4>Navigate</h4>
-          <a href="/">About</a>
+          <h4>Navigation</h4>
+          <a href="/">Home</a>
+          <a href="/#about">About</a>
           <a href="/#services">Services</a>
           <a href="/#work">Work</a>
           <a href="/#leadership">Leadership</a>
           <a href="/blog">Blog</a>
         </div>
-        <div class="footer-connect">
-          <h4>Start a Conversation</h4>
-          <a href="mailto:hello@artfullyoursevents.com" class="footer-cta">hello@artfullyoursevents.com</a>
+        <div class="footer-credentials">
+          <h4>Credentials</h4>
+          <a href="https://www.credly.com/users/antroinette-smith" target="_blank">PMP® Certified ↗</a>
+          <a href="https://www.credly.com/users/antroinette-smith" target="_blank">CMP Certified ↗</a>
+          <span>Inclusive Event Project Strategist</span>
+          <a href="https://www.bizbash.com/bizbash-lists/brands-event-pros/article/22936275/2025-bizbash-40-under-40-antroinette-smith" target="_blank">BizBash 40 Under 40 ↗</a>
+          <h4 style="margin-top:20px;">Connect</h4>
+          <a href="https://www.linkedin.com/in/antroinettesmith" target="_blank">LinkedIn →</a>
+          <a href="mailto:info@artfullyoursevents.com">info@artfullyoursevents.com →</a>
         </div>
       </div>
-      <div class="footer-bottom">
-        <p>&copy; 2025 The Artfullyours Agency. All rights reserved.</p>
-      </div>
-    </footer>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 The Artfullyours Agency, LLC. All rights reserved.</p>
+    </div>
+  </footer>
 
     <!-- Lightbox Overlay -->
     <div class="lightbox-overlay" id="lightbox-overlay">
