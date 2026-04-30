@@ -658,7 +658,23 @@
     .video-section { padding: 48px 24px; }
     .mood-section { padding: 48px 24px; }
     .cta-section { padding: 56px 24px; }
-    
+  
+  /* Mobile unmute overlay */
+  .video-unmute-btn {
+    display: none;
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    z-index: 10; background: rgba(61,26,46,0.85); border: 1px solid var(--gold);
+    color: var(--cream); font-family: 'Cormorant Garamond', serif;
+    font-size: 14px; letter-spacing: 3px; text-transform: uppercase;
+    padding: 14px 28px; cursor: pointer; backdrop-filter: blur(4px);
+    transition: opacity 0.3s ease;
+  }
+  .video-unmute-btn:hover { background: rgba(61,26,46,0.95); }
+  @media (max-width: 900px) {
+    .video-unmute-btn { display: block; }
+  }
+  .hero-scroll { bottom: 8px; }
+    .hero-meta { margin-bottom: 36px; }
   }
   @media (max-width: 600px) {
     .nav-links a:not(.active) { display: none; }
@@ -738,7 +754,7 @@
 <div class="image-break">
   <img src="images/eat-rich-setting.jpg" alt="Pearls and gold on fine china">
   <img src="images/eat-rich-tarts.jpg" alt="Cherry tarts on silver tray">
-  <img src="images/red-shoe-briefcase.png" alt="Red stiletto heel on leather briefcase — The details make the design">
+  <img src="images/eat-rich-gold.jpg" alt="Gold necklace on scalloped plate">
 </div>
 
 <!-- SECTION II: THE PARALLEL (DARK) -->
@@ -768,6 +784,7 @@
       <video id="teaser" controls autoplay muted playsinline preload="auto">
         <source src="video/teaser.mp4" type="video/mp4">
       </video>
+      <button class="video-unmute-btn" id="unmute-btn" aria-label="Tap to unmute">Tap to Unmute</button>
       <script>
         (function(){
           var v = document.getElementById('teaser');
@@ -783,7 +800,37 @@
         })();
       </script>
     </div>
-    <div class="video-caption">Watch the Brand Launch Teaser</div>
+    <div class="video-caption">Watch the Brand Launch Teaser
+
+    </div>
+    <script>
+      (function(){
+        var vid = document.getElementById('teaser');
+        var btn = document.getElementById('unmute-btn');
+        if (!vid || !btn) return;
+        // Only show on mobile
+        function isMobile(){ return window.innerWidth <= 900; }
+        if (isMobile()) {
+          btn.style.display = 'block';
+          btn.addEventListener('click', function(){
+            vid.muted = false;
+            btn.style.opacity = '0';
+            setTimeout(function(){ btn.style.display = 'none'; }, 300);
+          });
+          // Also unmute on first tap of video
+          vid.addEventListener('click', function(){
+            vid.muted = false;
+            btn.style.display = 'none';
+          }, {once: true});
+        }
+        // Hide button if resized to desktop
+        window.addEventListener('resize', function(){
+          if (!isMobile()) { btn.style.display = 'none'; }
+        });
+      })();
+    </script>
+
+
   </div>
 </div>
 
@@ -925,9 +972,9 @@
       <img src="images/experiential-evidence.png" alt="Experiential Evidence — gold frame collage">
       <div class="mood-tile-label">Experiential Evidence</div>
     </div>
-    <div class="mood-tile" data-lightbox data-lb-title="Eat the Rich" data-lb-artist="Fanette Guilloud, 2025" data-lb-desc="Gold on porcelain. Excess as editorial statement." data-lb-collection="Dress the Story Collection" data-lb-src="images/eat-rich-gold.jpg">
-      <img src="images/eat-rich-gold.jpg" alt="Gold necklace on scalloped plate">
-      <div class="mood-tile-label">Eat the Rich</div>
+    <div class="mood-tile" data-lightbox data-lb-title="The Details Make the Design" data-lb-artist="The Artfullyours Agency, 2026" data-lb-desc="Red stiletto on leather briefcase. Power dressing as design philosophy." data-lb-collection="Dress the Story Collection" data-lb-src="images/red-shoe-briefcase.png">
+      <img src="images/red-shoe-briefcase.png" alt="Red stiletto heel on leather briefcase — The details make the design">
+      <div class="mood-tile-label">The Details Make the Design</div>
     </div>
     <div class="mood-tile" data-lightbox data-lb-title="The Article" data-lb-artist="The Artfullyours Agency, 2026" data-lb-desc="The brand launch editorial — Devil Wears Prada meets event strategy." data-lb-collection="Collection of The Artfullyours Agency" data-lb-src="images/mood/the-article.png">
       <img src="images/mood/the-article.png" alt="DWP2 editorial article">
