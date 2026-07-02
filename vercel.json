@@ -1,5 +1,6 @@
 {
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/dwp2-blog", "destination": "/dwp2-blog/public/index.html" },
+    { "source": "/dwp2-blog/", "destination": "/dwp2-blog/public/index.html" }
   ]
 }
